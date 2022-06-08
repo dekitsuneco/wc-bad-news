@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import './components/NewsArticle.js';
 import { topHeadlinesURL } from './api/newsAPI.js';
@@ -25,6 +26,17 @@ const createNews = async () => {
   renderArticles(data);
 };
 
+async function registerSW() {
+  if ('serviceWorker' in navigator) {
+    try {
+      await navigator.serviceWorker.register('./sw.js');
+    } catch (e) {
+      console.error('SW registration failed');
+    }
+  }
+}
+
 window.addEventListener('load', () => {
   createNews();
+  registerSW();
 });
